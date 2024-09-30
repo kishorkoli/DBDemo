@@ -1,0 +1,74 @@
+DB Design - 
+
+Entities :
+
+1.Theatre
+
+Attributes:
+theatre_id (Primary Key)
+theatre_name
+location
+
+DDL - 
+CREATE TABLE Theatre (
+    theatre_id INT AUTO_INCREMENT PRIMARY KEY,
+    theatre_name VARCHAR(100) NOT NULL,
+    location VARCHAR(100) NOT NULL
+);
+
+Sample entry - 
+INSERT INTO Theatre (theatre_name, location) VALUES 
+('Cineplex 1', 'Downtown'),
+('Cineplex 2', 'Uptown');
+
+
+2.Movie
+
+Attributes:
+movie_id (Primary Key)
+title
+duration
+genre
+rating
+
+DDL - 
+CREATE TABLE Movie (
+    movie_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    duration INT NOT NULL, -- Duration in minutes
+    genre VARCHAR(50),
+    rating FLOAT CHECK (rating >= 0 AND rating <= 10)
+);
+
+Sample entry - 
+INSERT INTO Movie (title, duration, genre, rating) VALUES 
+('Inception', 148, 'Sci-Fi', 8.8),
+('The Godfather', 175, 'Crime', 9.2);
+
+
+3.Show
+
+Attributes:
+show_id (Primary Key)
+theatre_id (Foreign Key)
+movie_id (Foreign Key)
+show_date
+show_time
+
+DDL - 
+CREATE TABLE Show (
+    show_id INT AUTO_INCREMENT PRIMARY KEY,
+    theatre_id INT,
+    movie_id INT,
+    show_date DATE NOT NULL,
+    show_time TIME NOT NULL,
+    FOREIGN KEY (theatre_id) REFERENCES Theatre(theatre_id),
+    FOREIGN KEY (movie_id) REFERENCES Movie(movie_id)
+);
+
+Sample entry - 
+
+INSERT INTO Show (theatre_id, movie_id, show_date, show_time) VALUES 
+(1, 1, '2024-10-01', '18:30:00'),
+(1, 2, '2024-10-01', '20:30:00'),
+(2, 1, '2024-10-01', '19:00:00');
